@@ -1,0 +1,95 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand text-uppercase" href>{{title}}</a>
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mx-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-white" href="javascript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Select Location
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <li ng-repeat="location in locations">
+                        <a class="dropdown-item" ng-class="{'dropdown-toggle': location.branches.length>0}" href="javascript:void(0)" ng-click="showCategories(location, 'location')">{{location.name}}</a>
+                        <ul class="dropdown-menu" ng-if="location.branches.length>0">
+                            <li ng-repeat="branch in location.branches"><a class="dropdown-item" href="javascript:void(0)" ng-click="showCategories(branch, 'branch')">{{branch.name}}</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-5 pt-5">
+    <nav aria-label="breadcrumb" ng-if="selectedLocation">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item title">Equipment Catalog</li>
+            <li class="breadcrumb-item" ng-class="{'active': (!selectedBranch && !selectedCategory)}">
+                <span title="Location: {{selectedLocation.name}}">{{(selectedBranch || selectedCategory) ? '' : selectedLocation.name}}</span>
+                <a href title="Location: {{selectedLocation.name}}" ng-click="showCategories(selectedLocation, 'location')" ng-if="(selectedBranch || selectedCategory)">{{selectedLocation.name}}</a>
+            </li>
+            <li class="breadcrumb-item" ng-if="selectedBranch" ng-class="{'active': !selectedCategory}">
+                <span title="Branch: {{selectedBranch.name}}">{{selectedCategory ? '' : selectedBranch.name}}</span>
+                <a href title="Branch: {{selectedBranch.name}}" ng-click="showCategories(selectedBranch, 'branch')" ng-if="selectedCategory">{{selectedBranch.name}}</a>
+            </li>
+            <li class="breadcrumb-item active" ng-if="selectedCategory"><span title="Category: {{selectedCategory.name}}">{{selectedCategory.name}}</span></li>
+        </ol>
+    </nav>
+    <div class="row">
+        <div ng-if="categories.length==0 && subCategories.length==0" class="mx-auto">
+            <section class="jumbotron text-center bg-white">
+                <div class="container">
+                    <h5 class="jumbotron-heading text-uppercase">
+                        welcome to<br>rental management system
+                    </h5>
+                    <p class="lead text-muted">
+                        Please select Location
+                    </p>
+                </div>
+            </section>
+        </div>
+        <div class="col-md-3" ng-repeat="category in categories" ng-if="categories.length>0 && subCategories.length==0">
+            <div class="card mb-4" ng-click="showSubCategories(category)">
+                <img class="card-img-top" style="height: 225px; width: 100%; display: block;" ng-src="./src/images/category/{{category.image}}" alt="{{category.name}}"
+                    data-holder-rendered="true" err-src="./src/images/227x227.png">
+                <div class="card-footer text-center bg-primary text-white">
+                    {{category.name}}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3" ng-repeat="subcategory in subCategories" ng-if="subCategories.length>0">
+            <div class="card mb-4">
+                <img class="card-img-top" style="height: 225px; width: 100%; display: block;" ng-src="./src/images/category/subcategory/{{subcategory.image}}" alt="{{subcategory.name}}"
+                    data-holder-rendered="true" err-src="./src/images/227x227.png">
+                <div class="card-footer text-center bg-primary text-white">
+                    {{subcategory.name}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function() {
+        $('.dropdown-menu a.dropdown-toggle').on('click', function(e) {
+            var $el = $(this);
+            var $parent = $(this).offsetParent(".dropdown-menu");
+            if (!$(this).next().hasClass('show')) {
+                $(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
+            }
+            var $subMenu = $(this).next(".dropdown-menu");
+            $subMenu.toggleClass('show');
+            $(this).parent("li").toggleClass('show');
+            $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function(e) {
+                $('.dropdown-menu .show').removeClass("show");
+            });
+            if (!$parent.parent().hasClass('navbar-nav')) {
+                $el.next().css({
+                    "top": $el[0].offsetTop,
+                    "left": $parent.outerWidth() - 4
+                });
+            }
+            return false;
+        });
+    });
+</script>

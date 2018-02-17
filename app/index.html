@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="application">
+
+<head>
+    <meta charset="utf-8">
+    <title>My AngularJS App</title>
+    <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./src/theme/app.css">
+
+    <script src="./bower_components/bootstrap/assets/js/vendor/jquery-slim.min.js"></script>
+    <script src="./bower_components/bootstrap/assets/js/vendor/popper.min.js"></script>
+    <script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./bower_components/angular/angular.min.js"></script>
+    <script src="./bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+
+    <script src="./src/app.modules.js"></script>
+    <script src="./src/app.config.js"></script>
+    <script src="./src/providers/catalog.service.js"></script>
+    <script src="./src/components/home/home.component.js"></script>
+</head>
+
+<body>
+
+    <div ui-view></div>
+
+</body>
+
+</html>

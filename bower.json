@@ -1,0 +1,12 @@
+{
+  "name": "pushpendra",
+  "description": "",
+  "version": "1.0.0",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.6.9",
+    "angular-ui-router": "^1.0.15",
+    "bootstrap": "4.0"
+  }
+}
