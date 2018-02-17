@@ -15,7 +15,7 @@ angular.module('controller.home', [])
         });
     })();
 
-    $scope.showCategories = function(dataObj, showCategoriesFor) {
+    $scope.showCategories = function(dataObj, showCategoriesFor, location) {
         $scope.categories = [];
         $scope.subCategories = [];
         $scope.selectedCategory = null;
@@ -27,6 +27,7 @@ angular.module('controller.home', [])
                 $scope.categories = $scope.categories.concat(branchCategories);
             }
         } else if (showCategoriesFor == 'branch') {
+            $scope.selectedLocation = location ? location : null;
             $scope.selectedBranch = dataObj;
             $scope.categories = dataObj.categories;
         }
